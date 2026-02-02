@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2026-02-02">
+    <creator>NetworkX 3.6.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <nodes>
+      <node id="Peck_Hall" label="Peck_Hall" />
+      <node id="Morris_Center" label="Morris_Center" />
+      <node id="LoveJoy_Library" label="LoveJoy_Library" />
+      <node id="Science_West" label="Science_West" />
+      <node id="Science_East" label="Science_East" />
+      <node id="Founders_Hall" label="Founders_Hall" />
+      <node id="Katherine_Dunham_Hall" label="Katherine_Dunham_Hall" />
+      <node id="Rendleman_Hall" label="Rendleman_Hall" />
+      <node id="Alumni_Hall" label="Alumni_Hall" />
+      <node id="Fitness_Center" label="Fitness_Center" />
+      <node id="SIUE_Pharmacy" label="SIUE_Pharmacy" />
+      <node id="Engineering_Building" label="Engineering_Building" />
+      <node id="Art_and_Design_East" label="Art_and_Design_East" />
+      <node id="Bluff_Hall" label="Bluff_Hall" />
+      <node id="Evergreen_Residence" label="Evergreen_Residence" />
+    </nodes>
+    <edges>
+      <edge source="Peck_Hall" target="Morris_Center" id="0" />
+      <edge source="Peck_Hall" target="Fitness_Center" id="1" />
+      <edge source="Science_West" target="Art_and_Design_East" id="2" />
+      <edge source="Katherine_Dunham_Hall" target="Engineering_Building" id="3" />
+      <edge source="Rendleman_Hall" target="SIUE_Pharmacy" id="4" />
+    </edges>
+  </graph>
+</gexf>
