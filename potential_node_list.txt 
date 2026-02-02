@@ -1,0 +1,44 @@
+# left side of farthest right parking lots  (Lots 4-8)
+L_P4
+L_P5
+L_P6
+L_P7
+L_Top_P7
+L_P8
+L_Top_P8
+
+# right side of farthest right parking lots (Lots 4-8)
+R_P4
+R_P5
+R_P6
+R_P7
+R_Top_P7
+R_P8
+R_Top_P8
+
+# walkway from university to main campus from (Lots 4-8)
+Left_Bottom_Plot_Walk
+Right_Bottom_Plot_Walk
+Right_Top_Plot_Walk
+Left_Top_Plot_Walk
+
+
+# Where buses pickup from Near Rendleman and Peck
+Bus_Pickup_Left
+Bus_Pickup_Right
+
+# University Center of Campus
+we will have 8 nodes here probably name them whatever
+
+# Junction Nodes
+Due to how the university is laid out we will probably have to have junction nodes
+so all our paths will stay straight lines (makes calculating distance easy)
+
+# Morris Center
+4 entrances
+
+# Science East -> West && Founders -> Alumni
+take into account that you can go between these buildings as a potential route
+
+# Lovejoy Library  
+2 entrances
