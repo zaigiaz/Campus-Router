@@ -1,3 +1,13 @@
+
+TODO: naming schema for nodes
+TODO: get data for each distance between nodes
+
+# Overview
+~ 155 nodes
+~ 400 edges
+
+for now I will probably just estimate with a random graph with similar properties and talk about issues
+
 # left side of farthest right parking lots  (Lots 4-8)
 L_P4
 L_P5
@@ -42,3 +52,5 @@ take into account that you can go between these buildings as a potential route
 
 # Lovejoy Library  
 2 entrances
+
+
