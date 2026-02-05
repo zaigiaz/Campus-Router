@@ -3,8 +3,8 @@ TODO: naming schema for nodes
 TODO: get data for each distance between nodes
 
 # Overview
-~ 155 nodes
-~ 400 edges
+- 147 nodes
+~ 330 edges (too lazy to approximate for now)
 
 for now I will probably just estimate with a random graph with similar properties and talk about issues
 
