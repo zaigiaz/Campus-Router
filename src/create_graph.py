@@ -26,10 +26,14 @@ def create_graph():
 
 def main():    
     graph = create_graph()
+    
     nx.write_gexf(graph, "../img/graph.gexf")
+    nx.write_gml(graph, "../img/graph.gml")
 
 
-main()
+
 print("reached end of program")
+
+
 
 
