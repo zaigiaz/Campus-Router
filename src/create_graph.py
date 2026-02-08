@@ -19,7 +19,7 @@ edge_list = [{"Peck_Hall", "Morris_Center"}, {"Katherine_Dunham_Hall", "Engineer
 
 # main square of university just the 11 in the circle, for now
 main_square = ["M_centerA", "M_centerB", "M_centerC", "M_centerD","M_centerE","M_centerF","M_centerG","M_centerH","M_centerI","M_centerJ",
-               "Lovejoy_Front", "Morris_Front", "Morris_SideA", "Morris_SideB", "Morris_Back"] 
+               "Lovejoy_Front", "Morris_Front", "Morris_SideA", "Morris_SideB", "Morris_Back", "SIUE_Pharmacy_Front", "SIUE_Pharmacy_Back"] 
 
 dunham = ["Dunham_Front", "Dunham_Back"]
 
@@ -33,13 +33,13 @@ Science = ["Science_East_Main", "Science_West_Main", "Science_East_SideA", "Scie
 Theatre = ["Theatre_Front", "Theatre_Back", "Theatre_Side"]
 
 # All nodes around Founder and Alumni
-Founder_Alumni = []
+Founder_Alumni = ["Founder_Entrance", "Alumni_Front", "Alumni_Back", "Alumni_Side"]
 
 # All nodes around Parking Lots 4 to 10
-P4_P10 =  []
+P4_P10 =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 # all nodes around the University Drive Circle
-Uni_Drive =  []
+Uni_Drive =  [16, 17, 18, 19, 20, 21]
 
 # all nodes around Parking Lot A and the Vandabelene Center
 PA_VCenter =  []
@@ -47,10 +47,10 @@ PA_VCenter =  []
 # all nodes Science East and West
 
 # all nodes behind morris and dunham hall
-Morris_back = []
+Morris_back = [22, 23, 24, 25, 26, 27, 28, 29, 30]
 
 # misc
-extras = []
+extras = [31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
 def create_graph():
     G = nx.Graph()
@@ -61,6 +61,10 @@ def create_graph():
     G.add_nodes_from(peck_hall)
     G.add_nodes_from(Engineering_Art)
     G.add_nodes_from(Theatre)
+    G.add_nodes_from(P4_P10)
+    G.add_nodes_from(Uni_Drive)
+    G.add_nodes_from(Morris_back)
+    G.add_nodes_from(extras)
 
     # G.add_edges_from(edge_list)
 
@@ -69,11 +73,11 @@ def create_graph():
 def main():    
     graph = create_graph()
     
-    nx.write_gexf(graph, "../img/graph.gexf")
+    # nx.write_gexf(graph, "../img/graph.gexf")
     nx.write_gml(graph, "../img/graph.gml")
 
 
-
+main()
 print("reached end of program")
 
 
