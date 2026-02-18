@@ -7,3 +7,12 @@ SIUE Campus-Router using Python, GIS data, etc.
 - [ ] finish networkx graph
 - [ ] visualize graph with gephi for report
 - [ ] implement pathfinding algorithms
+
+
+
+# Used Packages
+- NetworkX
+- Osmnx
+- Open Street Maps (For Data)
+- Osmium-Tools (For cleaning data)
+
