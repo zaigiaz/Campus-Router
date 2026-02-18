@@ -2,13 +2,11 @@
 SIUE Campus-Router using Python, GIS data, etc.
 
 # Todos:
-- [ ] gather data from Openstreetmaps
-- [ ] contact SIUE accessibility office if possible
-- [ ] finish networkx graph
-- [ ] visualize graph with gephi for report
-- [ ] implement pathfinding algorithms
-
-
+- make all edges bidrectional
+- add lat,lon points to every node
+- use osmnx to calculate haversine distances between nodes (need multi-DI-Graph)
+- make Djistrika's and A* algorithm for pathfinding on our graph with Euclidean or Haversine heuristic
+- Write paper and presentation
 
 # Used Packages
 - NetworkX
