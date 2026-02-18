@@ -1,10 +1,12 @@
 import networkx as nx
 
-g = nx.read_gexf("../img/campus.gexf")
+g = nx.read_graphml("../img/graph.graphml")
 
-print(len(g.nodes()))
-print(len(g.edges()))
 
-G = nx.to_undirected(g)
 
-nx.write_gexf(G, "../img/undirected.gexf")
+for n, data in g.nodes(data=True):
+    print(n, data.get("label"))
+
+
+
+
