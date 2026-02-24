@@ -222,6 +222,10 @@ graph [
       fontName "Dialog"
       model "null"
     ]
+    x -89.99823712837959
+    y 38.79272403447099
+    latitude 38.79272403447099
+    longitude -89.99823712837959
   ]
   node [
     id 9
@@ -443,6 +447,10 @@ graph [
       fontName "Dialog"
       model "null"
     ]
+    x -89.99652652890443
+    y 38.79259213657085
+    latitude 38.79259213657085
+    longitude -89.99652652890443
   ]
   node [
     id 18
@@ -464,6 +472,10 @@ graph [
       fontName "Dialog"
       model "null"
     ]
+    x -89.99651580006896
+    y 38.79235381181314
+    latitude 38.79235381181314
+    longitude -89.99651580006896
   ]
   node [
     id 19
@@ -3215,6 +3227,10 @@ graph [
       fontName "Dialog"
       model "null"
     ]
+    x -89.99712401169914
+    y 38.79311705879656
+    latitude 38.79311705879656
+    longitude -89.99712401169914
   ]
   edge [
     source 0
@@ -4564,7 +4580,7 @@ graph [
   edge [
     source 107
     target 13
-pp    graphics [
+    graphics [
       fill "#000000"
       targetArrow "standard"
     ]

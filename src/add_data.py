@@ -16,8 +16,8 @@ coords = {
 "M_centerJ": (38.79292798625825, -89.9983617682965),
 "M_centerG": (38.79275957399381, -89.99722593563614),
 "M_centerH": (38.7927198533495, -89.99790721668876),
-"M_centerW": (38.79311705879656, -89.99712401169914 ),
-"M_centerM": (38.79272403447099, -89.99823712837959),
+"M_CenterW": (38.79311705879656, -89.99712401169914 ),
+"M_centerI": (38.79272403447099, -89.99823712837959),
 "M_centerZ": (38.79311078714883, -89.99711864728141 ),
 "Lovejoy_Front": (38.793540753610685, -89.99777348264709),
 "Morris_Front": (38.79254823468794, -89.99751626416712),
@@ -26,8 +26,8 @@ coords = {
 "Morris_Back": (38.79160747383043, -89.99762355251403),
 "SIUE_Pharmacy_Front": (38.79133360556398, -89.99835311336693),
 "SIUE_Pharmacy_Back": (38.79144858855188, -89.99786495135285),
-"Rendleman-Front": (38.79259213657085, -89.99652652890443),
-"Rendleman-Back": (38.79235381181314, -89.99651580006896),
+"Rendleman_Front": (38.79259213657085, -89.99652652890443),
+"Rendleman_Back": (38.79235381181314, -89.99651580006896),
 "Science_East_Main": (38.794132866027084, -89.99914704710184),
 "Science_West_Main": (38.79372424125805, -89.99999144793283),
 "Science_East_SideA": (38.794121441121014, -89.99848404646853),
@@ -173,6 +173,10 @@ for node in list(G.nodes()):
         # optional explicit attrs
         G.nodes[node]["latitude"] = float(lat)
         G.nodes[node]["longitude"] = float(lon)
+
+
+missing = [str(n) for n in G.nodes() if str(n) not in coords]
+print("Missing from coords:", missing)
 
 nx.write_gml(G, output_gml)
 print("Wrote", output_gml)
