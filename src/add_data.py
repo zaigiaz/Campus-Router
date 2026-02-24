@@ -1,11 +1,11 @@
 import networkx as nx
 
-# Path to your input and output GML files
+# this script was neccessary for adding all the lat,lon data manually
+# into the graph, I got this data from google maps, and approximated the nearest area to the node that I wanted
+
 input_gml = "../data/graph.gml"
 output_gml = "../data/output_updated.gml"
 
-# Example dictionary mapping node keys -> (lat, lon).
-# Replace these example entries with your full dictionary.
 coords = {
 "M_centerA": (38.79339928238181, -89.99821835293922),
 "M_centerB": (38.793418097247276, -89.99777310626705),
@@ -143,16 +143,15 @@ G = nx.read_gml(input_gml)
 
 
 def find_coord_for_node_key(node_key):
-    # Try direct string match
     s = str(node_key)
     if s in coords:
         return coords[s]
-    # If node_key is numeric like 1 and coords use "n1", try prefixing
+
     if s.isdigit():
         k = "n" + s
         if k in coords:
             return coords[k]
-    # If node_key is like 'n1' but coords store numeric '1', try stripping 'n'
+
     if s.startswith("n") and s[1:].isdigit():
         k = s[1:]
         if k in coords:
@@ -162,15 +161,11 @@ def find_coord_for_node_key(node_key):
 for node in list(G.nodes()):
     val = find_coord_for_node_key(node)
     
-    # if val is None:
-        # for checking if not added data for lat,lon
 
     if val is not None:
         lat, lon = val
-        # Common GML uses x=lon, y=lat
         G.nodes[node]["x"] = float(lon)
         G.nodes[node]["y"] = float(lat)
-        # optional explicit attrs
         G.nodes[node]["latitude"] = float(lat)
         G.nodes[node]["longitude"] = float(lon)
 
@@ -180,5 +175,3 @@ print("Missing from coords:", missing)
 
 nx.write_gml(G, output_gml)
 print("Wrote", output_gml)
-
-
