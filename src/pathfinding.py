@@ -16,8 +16,7 @@ queue = [] # .append, .pop(0)
 
 G = nx.read_gml("../data/final_graph.gml")
 
-
-# TODO: complete helper functions for this
+# TODO: complete helper functions for this algorithm
 def Djistrikas_Algorithm():
 
     # Priority Queue
@@ -27,12 +26,15 @@ def Djistrikas_Algorithm():
     dist = [False for _ in range(len(G.nodes()))]
     prev = [False for _ in range(len(G.nodes()))]
     
-    for i,v in enumerate(G.nodes()):
+    for i,v in enumerate(G.nodes()):        
         pq.append((i, v))
 
-    while is not pq:
-        u = distance_to_target(1, 5)
+    u = distance_to_target(G.nodes['1'], G.nodes['32'])
+    print(pq)
+
+    while pq:
         pq.pop(0)
+
 
       # TODO: translate and complete this
       #   for each edge (u, v) in Graph:
@@ -41,25 +43,30 @@ def Djistrikas_Algorithm():
       #             dist[v] ← alt
       #             prev[v] ← u
 
+
   # return dist[], prev[]
 
-
-
-    print(pq)
-
         
-
-
-
 # distance to the goal node from current node (calculated using Euclidean Distance)
+# uses basic 3d projection of euclidean distance for distance estimate on earths surface
 def distance_to_target(src, target):
-    print("hello")
+    
+    lat1 = src['latitude']  
+    lon1 = src['longitude']
+
+    lat2 = target['latitude']
+    lon2 = target['longitude']
+
+    
+    print(lat1, lon1, lat2, lon2)
+
+    # print(src, target)
+
 
 
 
 Djistrikas_Algorithm()
 print("Nodes: ", len(G.nodes()))
 print("Edges: ", len(G.edges()))
-
 
 
