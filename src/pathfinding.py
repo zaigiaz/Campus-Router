@@ -1,4 +1,7 @@
 import networkx as nx 
+import math
+import sys
+import heapq
 
 # TODO: use the neighbors() function to get all neighbors in a graph
 #       for pathfinding purposes?
@@ -10,63 +13,85 @@ import networkx as nx
 
 # Djistrikas Algorithm Reference
 # https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
- 
-stack = [] # .append, pop()
-queue = [] # .append, .pop(0)
+
+# for Euclidean Heuristic 
+EARTH_RADIUS_FT = 20_902_900.0
 
 G = nx.read_gml("../data/final_graph.gml")
 
-# TODO: complete helper functions for this algorithm
 def Djistrikas_Algorithm():
 
-    # Priority Queue
-    # Min Distance choosen first
-
-    pq = []
-    dist = [False for _ in range(len(G.nodes()))]
-    prev = [False for _ in range(len(G.nodes()))]
+    # example case  testing
+    start_node = '1'
+    end_node = '33'
     
-    for i,v in enumerate(G.nodes()):        
-        pq.append((i, v))
+    dist = {node: math.inf for node in G.nodes()}
+    dist[start_node] = 0
 
-    u = distance_to_target(G.nodes['1'], G.nodes['32'])
-    print(pq)
-
+    prev = {}
+    pq = [(0, start_node)] 
+    visited = set()
+    
     while pq:
-        pq.pop(0)
+        cur_dist, u = heapq.heappop(pq)
+        
+        if u in visited:
+            continue
+        visited.add(u)
+        
+        if u == end_node:
+            break
+            
+        for v in G.neighbors(u):
+            weight = G[u][v].get('distance', 1.0)
+            alt = cur_dist + weight
+            
+            if alt < dist[v]:
+                dist[v] = alt
+                prev[v] = u
+                heapq.heappush(pq, (alt, v))
+    
 
+    if end_node not in prev and end_node != start_node:
+        return None
+    
+    path = []
+    cur = end_node
 
-      # TODO: translate and complete this
-      #   for each edge (u, v) in Graph:
-      #       alt ← dist[u] + Graph.Distance(u,v)
-      #         if alt < dist[v]:
-      #             dist[v] ← alt
-      #             prev[v] ← u
+    while cur != start_node:
+        path.append(cur)
+        cur = prev[cur]
+    path.append(start_node)
+    path.reverse()
 
-
-  # return dist[], prev[]
+    return path, dist[end_node]
 
         
 # distance to the goal node from current node (calculated using Euclidean Distance)
 # uses basic 3d projection of euclidean distance for distance estimate on earths surface
-def distance_to_target(src, target):
+def Euclidean_Heuristic(src, target):
     
-    lat1 = src['latitude']  
-    lon1 = src['longitude']
+    lat1 = math.radians(src['latitude'])
+    lon1 = math.radians(src['longitude'])
+    lat2 = math.radians(target['latitude'])
+    lon2 = math.radians(target['longitude'])
 
-    lat2 = target['latitude']
-    lon2 = target['longitude']
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
 
-    
-    print(lat1, lon1, lat2, lon2)
+    x = dlon * math.cos(0.5 * (lat1 + lat2))
+    y = dlat
 
-    # print(src, target)
-
-
+    return EARTH_RADIUS_FT * math.hypot(x,y)
 
 
-Djistrikas_Algorithm()
+
+
+path, distance = Djistrikas_Algorithm()
+
+print(path, distance)
 print("Nodes: ", len(G.nodes()))
 print("Edges: ", len(G.edges()))
+
 
 
