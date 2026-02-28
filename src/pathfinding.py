@@ -3,13 +3,8 @@ import math
 import sys
 import heapq
 
-# TODO: use the neighbors() function to get all neighbors in a graph
-#       for pathfinding purposes?
-
 # TODO: Djistrikas and A* search, where Euclidean between two lat,lon points is our hueristic
 #       and haversine is what we used to calculate distance between points as our edge wieghts
-
-# TODO: implement or get stacks and queues for the algorithms
 
 # Djistrikas Algorithm Reference
 # https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
@@ -43,14 +38,15 @@ def Djistrikas_Algorithm():
         visited.add(u)
         
         # end after we have found the goal node
+        # TODO: make this a list of goal nodes, depending on building
         if u == end_node:
             break
+
 
         # check all of the neighbors
         for v in G.neighbors(u):
             weight = G[u][v].get('distance', 1.0)
             alt = cur_dist + weight
-            
             if alt < dist[v]:
                 dist[v] = alt
                 prev[v] = u
@@ -90,14 +86,37 @@ def Euclidean_Heuristic(src, target):
     return EARTH_RADIUS_FT * math.hypot(x,y)
 
 
-# TODO: implement this Tommorow
-def A_star():
-    print("A_star algo")
+# Floyd-Warshall Algorithm 
+def Floyd_Warshall():
+    print("Floyd-Warhsall algo")
 
 
+    # TODO: iterate over node container correctly
+    size = len(G.nodes())
+    nodes = list(G.nodes())
+
+    # 130 x 130 DP
+    dist = [[math.inf for _ in range(size)] for _ in range(size)]
+
+    # distance to self is 0 in the DP table
+    for v in range(size):
+        dist[v][v] = 0
+    
+    for edge in G.edges():
+        cur_edge = G.edges(edge)
+    
+
+
+
+
+# TODO: add estimated times for walking, biking, etc.
 # function to calculate travel distance in minutes
 # based on walking type, etc
-def convert_to_time(travel_distance):
+def convert_to_time(travel_distance, travel_type):
+
+    if travel_type == "walking":
+        print("walking")
+
     print(travel_distance)
 
 
@@ -107,3 +126,4 @@ path, distance = Djistrikas_Algorithm()
 print(path, distance)
 print("Nodes: ", len(G.nodes()))
 print("Edges: ", len(G.edges()))
+Floyd_Warshall()
