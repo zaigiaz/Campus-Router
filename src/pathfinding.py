@@ -19,11 +19,13 @@ EARTH_RADIUS_FT = 20_902_900.0
 
 G = nx.read_gml("../data/final_graph.gml")
 
+# TODO: make this consider multiple different goal nodes, and terminate after finding
+#       the first goal node (considering multiple building entrances)
 def Djistrikas_Algorithm():
 
     # example case  testing
     start_node = '1'
-    end_node = '33'
+    end_node = 'Lovejoy_Front'
     
     dist = {node: math.inf for node in G.nodes()}
     dist[start_node] = 0
@@ -37,11 +39,14 @@ def Djistrikas_Algorithm():
         
         if u in visited:
             continue
+
         visited.add(u)
         
+        # end after we have found the goal node
         if u == end_node:
             break
-            
+
+        # check all of the neighbors
         for v in G.neighbors(u):
             weight = G[u][v].get('distance', 1.0)
             alt = cur_dist + weight
@@ -85,13 +90,20 @@ def Euclidean_Heuristic(src, target):
     return EARTH_RADIUS_FT * math.hypot(x,y)
 
 
+# TODO: implement this Tommorow
+def A_star():
+    print("A_star algo")
 
 
+# function to calculate travel distance in minutes
+# based on walking type, etc
+def convert_to_time(travel_distance):
+    print(travel_distance)
+
+
+
+# algo showcase
 path, distance = Djistrikas_Algorithm()
-
 print(path, distance)
 print("Nodes: ", len(G.nodes()))
 print("Edges: ", len(G.edges()))
-
-
-
