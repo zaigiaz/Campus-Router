@@ -3,11 +3,13 @@ import math
 import sys
 import heapq
 
-# TODO: CHeck this data for correctness
-# 0.13732771944621822 M_centerB Lovejoy_Front
-# 0.9791639734434642 Science_East_Back 65
-# 0.7593135823466972 Alumni Founders_Back
-# 0.005591479496646561 54 53
+
+# TODO: for today:
+# Make Djistrika and Floyd have multiple answers
+# DO Experiments and plot with either gnuplot or matplotlib
+# create the code to make map with highlighted path for both algorithms
+# Finish Presentation Slides
+
 
 # Djistrikas Algorithm Reference
 # https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
@@ -40,11 +42,8 @@ def Djistrikas_Algorithm(u, v):
 
         visited.add(u)
         
-        # end after we have found the goal node
-        # TODO: make this a list of goal nodes, depending on building
         if u == end_node:
             break
-
 
         # check all of the neighbors
         for v in G.neighbors(u):
@@ -53,8 +52,7 @@ def Djistrikas_Algorithm(u, v):
             if alt < dist[v]:
                 dist[v] = alt
                 prev[v] = u
-                heapq.heappush(pq, (alt, v))
-    
+                heapq.heappush(pq, (alt, v))    
 
     if end_node not in prev and end_node != start_node:
         return None
@@ -70,25 +68,26 @@ def Djistrikas_Algorithm(u, v):
 
     return path, dist[end_node]
 
-        
-# distance to the goal node from current node (calculated using Euclidean Distance)
-# uses basic 3d projection of euclidean distance for distance estimate on earths surface
-def Euclidean_Heuristic(src, target):
+
+# runs Djistirkas multiple times to take into account multiple goal nodes.
+# takes a list called building which has all the building entrances for given building
+def Djistrika_Multiple_Answer(start_node, Building):
+
+    ans_list = []
+
+    for end_node in range(len(Building)):        
+        path, dist = Djistrikas_Algorithm(start_node, end_node)
     
-    lat1 = math.radians(src['latitude'])
-    lon1 = math.radians(src['longitude'])
-    lat2 = math.radians(target['latitude'])
-    lon2 = math.radians(target['longitude'])
+        if path == None or dist == math.inf:
+            print(f'cannot reach {end_node} from {start_node}')
+            heapq.heappush(pq, (math.inf, None))
+        
+        heapq.heappush(pq, (dist, path))
 
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-
-    x = dlon * math.cos(0.5 * (lat1 + lat2))
-    y = dlat
-
-    return EARTH_RADIUS_FT * math.hypot(x,y)
-
-
+    dist, path = heapq.heappop(pq, (dist, path))
+    return dist, path
+        
+    
 # Floyd-Warshall Algorithm
 # TODO: return path and distance (helper function)
 # TODO: return correct given src node name and target node name
@@ -175,14 +174,13 @@ def convert_to_time(travel_distance, travel_type):
     bike_travel = 18
     jog_speed = 7.5
     
-
     if travel_type == "walking":
         sec_time = travel_distance / foot_travel
 
-    if travel_type == "biking":
+    elif travel_type == "biking":
         sec_time = travel_distance / bike_travel
 
-    if travel_type == "jog":
+    elif travel_type == "jog":
         sec_time = travel_distance / jog_speed
 
     else:
@@ -197,21 +195,24 @@ def convert_to_time(travel_distance, travel_type):
     return time
 
 
-src = '1'
-target = 'Lovejoy_Front'
+# main function for testing and other stuff
+def main():
+    src = '1'
+    target = 'Lovejoy_Front'
+
+    # algo showcase
+    print("Nodes: ", len(G.nodes()))
+    print("Edges: ", len(G.edges()))
+
+    path, distance = Djistrikas_Algorithm(src, target)
+    print(path, distance)
+
+    dist, nxt, idx, rev_idx = Floyd_Warshall()
+
+    path, dist = Floyd_Answer(src, target, dist, nxt, idx)
+    print(path, dist)
+
+    print(convert_to_time(dist, "walking"))
 
 
-# algo showcase
-print("Nodes: ", len(G.nodes()))
-print("Edges: ", len(G.edges()))
-
-path, distance = Djistrikas_Algorithm(src, target)
-print(path, distance)
-
-dist, nxt, idx, rev_idx = Floyd_Warshall()
-
-# print(idx)
-path, dist = Floyd_Answer(src, target, dist, nxt, idx)
-print(path, dist)
-
-print(convert_to_time(dist, 'walking'))
+if __name__  == "__main__": main()
