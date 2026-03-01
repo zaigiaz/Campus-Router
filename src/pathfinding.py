@@ -5,7 +5,6 @@ import heapq
 
 
 # TODO: for today:
-# Make Djistrika and Floyd have multiple answers
 # DO Experiments and plot with either gnuplot or matplotlib
 # create the code to make map with highlighted path for both algorithms
 # Finish Presentation Slides
@@ -73,10 +72,10 @@ def Djistrikas_Algorithm(u, v):
 # takes a list called building which has all the building entrances for given building
 def Djistrika_Multiple_Answer(start_node, Building):
 
-    ans_list = []
+    pq = []
 
     for end_node in range(len(Building)):        
-        path, dist = Djistrikas_Algorithm(start_node, end_node)
+        path, dist = Djistrikas_Algorithm(start_node, Building[end_node])
     
         if path == None or dist == math.inf:
             print(f'cannot reach {end_node} from {start_node}')
@@ -84,12 +83,11 @@ def Djistrika_Multiple_Answer(start_node, Building):
         
         heapq.heappush(pq, (dist, path))
 
-    dist, path = heapq.heappop(pq, (dist, path))
-    return dist, path
+    dist, path = heapq.heappop(pq)
+    return (dist, path)
         
     
 # Floyd-Warshall Algorithm
-# TODO: return path and distance (helper function)
 # TODO: return correct given src node name and target node name
 def Floyd_Warshall():
 
@@ -136,6 +134,30 @@ def Floyd_Warshall():
     return dist, nxt, idx, rev_idx
 
 
+
+# TODO finish this function
+# check multiple building entrances in Building List and then compute shortest path out of all.
+def Floyd_check_multiple(src, Building):
+
+    pq = []
+
+    dist, nxt, idx, rev_idx = Floyd_Warshall()
+
+    for node in Building:
+        distance = dist[idx[node]]
+        heapq.heappush(pq, (dist, node))
+
+    # pop off priority queue and get node with shortest distance
+    min_dist = heapq.heappop(pq)
+    
+    # name of our min distance target node
+    target_node = min_dist[1]
+
+    # format the final answer
+    path, dist = Floyd_Answer(src, target_node, dist, nxt, idx)
+
+    return path, dist
+    
 
 # get table from Floyd_Algo and then reconstruct path for given two nodes you want
 def Floyd_Answer(src, target, dist, nxt, idx):
@@ -200,19 +222,31 @@ def main():
     src = '1'
     target = 'Lovejoy_Front'
 
+    Building = ['Lovejoy_Front', '9', '32', 'Peck_Front']
+
     # algo showcase
     print("Nodes: ", len(G.nodes()))
     print("Edges: ", len(G.edges()))
 
+    # single source to target path Djistrika Implementation
     path, distance = Djistrikas_Algorithm(src, target)
     print(path, distance)
+    
+    # call Djistrika multiple times to get answer
+    ans = Djistrika_Multiple_Answer('1', Building)
+    print("shortest path out of all entrances", ans)
 
+    # example call to get basic floyd warshall table
     dist, nxt, idx, rev_idx = Floyd_Warshall()
 
-    path, dist = Floyd_Answer(src, target, dist, nxt, idx)
-    print(path, dist)
+    # checks every node in Building against the table in Warshall to find shortest path to building
+    dist, path = Floyd_check_multiple('1', Building)
+    print(dist, path)
 
-    print(convert_to_time(dist, "walking"))
+    # path, dist = Floyd_Answer(src, target, dist, nxt, idx)
+    # print(path, dist)
+
+    print(convert_to_time(ans[0], "walking"), "minute travel time")
 
 
 if __name__  == "__main__": main()
