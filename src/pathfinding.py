@@ -3,10 +3,12 @@ import math
 import sys
 import heapq
 
+# visualize graph file for nice figures
+import visualize_graph as vz
+
 
 # TODO: for today:
-# DO Experiments and plot with either gnuplot or matplotlib
-# create the code to make map with highlighted path for both algorithms
+# DO Experiments 1 and 2
 # Finish Presentation Slides
 
 
@@ -233,7 +235,7 @@ def main():
     print(path, distance)
     
     # call Djistrika multiple times to get answer
-    ans = Djistrika_Multiple_Answer('1', Building)
+    ans = Djistrika_Multiple_Answer('Art_sideA', Building)
     print("shortest path out of all entrances", ans)
 
     # example call to get basic floyd warshall table
@@ -243,10 +245,14 @@ def main():
     dist, path = Floyd_check_multiple('1', Building)
     print(dist, path)
 
+    vz.draw_graph(G)
+    vz.highlight_edges(ans[1])
+
     # path, dist = Floyd_Answer(src, target, dist, nxt, idx)
-    # print(path, dist)
 
     print(convert_to_time(ans[0], "walking"), "minute travel time")
 
 
 if __name__  == "__main__": main()
+
+
