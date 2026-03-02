@@ -18,8 +18,7 @@ building entrances. This is because buildings can have multiple entrances, meani
 An image of the path that is found with the algorithms is traced in img/matplot.png, here is an example:
 
 
-[[img_path](/img/matplot.png)]
-
+[![img_path](/img/matplot.png)]
 
 # Used Packages
 
