@@ -5,13 +5,13 @@ import heapq
 
 # visualize graph file for nice figures
 import visualize_graph as vz
+import buildings_list as bl
 
-# TODO: for today:
-# Clean up Main Function
+# TODO:
 # DO Experiments 1 and 2
-# Finish Presentation Slides
+# Finish Presentation Slides and Paper
 
-# Djistrikas Algorithm Reference
+# Djistrikas Algorithnm Reference
 # https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
 
 # Floyd Warshall Reference
@@ -25,7 +25,6 @@ G = nx.read_gml("../data/final_graph.gml")
 # 
 #      Output: path, distance
 #      returns the path to given goal node and the total sum distance
-
 def djistrikas_algorithm(u, v):
 
     start_node = u
@@ -81,7 +80,6 @@ def djistrikas_algorithm(u, v):
 # 
 # Output: (dist, path) 
 #         distance to smallest node, and path reconstructed to it
-
 def djistrika_multiple_nodes(start_node, Building):
 
     pq = []
@@ -278,12 +276,13 @@ def algo_report(src, target, Buildings):
     # Single Answer (From u to v) 
     if Buildings == None and target:
         path, distance = djistrikas_algorithm(src, target)
-        print(f'Path taken by djistrikas algorithm \n{path}\n distance_traveled: {distance}\n\n')
+        print(f'Path taken by djistrikas algorithm \n{path}\ndistance_traveled: {distance}\n\n')
     
         dist, nxt, idx, rev_idx = floyd_warshall()
         path, dist = floyd_answer(src, target, dist, nxt, idx)
     
-        print(path, dist)
+        print("Shortest path from Floyd-Warshall")
+        print(f'Distance: {dist}\nPath to goal node:\n{path}')
 
         node_list = path
 
@@ -292,22 +291,22 @@ def algo_report(src, target, Buildings):
     elif Buildings and target == None:
         # call Djistrika multiple times to get answer
         ans = djistrika_multiple_nodes(src, Building)
-        print("shortest path out of all entrances", ans)
+        print("djistrika: shortest path out of all entrances", ans)
         print(convert_to_time(ans[0], "walking"), "minute travel time")
 
-        node_list = ans[0]
+        node_list = ans[1]
 
+        print("Shortest path out of all pairs from Floyd-Warshall\n")
         dist, path = floyd_check_multiple('1', Building)
-        print(dist, path)
+        print(f'Distance: {dist}\n Path to goal node:\n {path}')
 
 
     else:
         print("something went wrong")
         sys.exit(1)
 
-
     
-    print("Drawing Graph -----")
+    print("\nDrawing Graph -----")
     vz.draw_graph(G)
     vz.highlight_edges(node_list)
     print("Finished!")
@@ -315,8 +314,4 @@ def algo_report(src, target, Buildings):
 
 
 Building = ['64', '62', 'Pallative Care', 'Peck_Back']
-algo_report('1', '3', None)
-
-
-
-
+algo_report('1', None, Building)
