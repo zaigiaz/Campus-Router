@@ -9,7 +9,7 @@ to find the path of an arc (u,v). After that I added two functions to take a lis
 building entrances. This is because buildings can have multiple entrances, meaning the algorithms need to account for N amount of arcs to a building instead of one.
 
 An image of the path that is found with the algorithms is traced in img/matplot.png, here is an example:
-[![path_image](../img/matplot.png)]
+[![img_path](/img/matplot.png)]
 
 # Used Packages
 - NetworkX
