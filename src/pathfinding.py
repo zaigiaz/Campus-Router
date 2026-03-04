@@ -25,6 +25,7 @@ G = nx.read_gml("../data/final_graph.gml")
 # 
 #      Output: path, distance
 #      returns the path to given goal node and the total sum distance
+#
 def djistrikas_algorithm(u, v):
 
     start_node = u
@@ -104,7 +105,7 @@ def djistrika_multiple_nodes(start_node, Building):
 # Output: matrix of distances from nodes i->j, table of prev nodes i->j
 #         two dicts of indexed node names, both forward and reverse 
 #
-def floyd_warshall():
+def floyd_warshall(G):
 
     size = len(G.nodes())
     nodes = list(G.nodes())
@@ -166,10 +167,10 @@ def floyd_check_multiple(src, Building):
 
     pq = []
 
-    dist, nxt, idx, rev_idx = floyd_warshall()
+    dist, nxt, idx, rev_idx = floyd_warshall(G)
 
     for node in Building:
-        distance = dist[idx[node]]
+        distance = dist[idx[src]][idx[node]]
         heapq.heappush(pq, (dist, node))
 
     # pop off priority queue and get node with shortest distance
@@ -269,20 +270,29 @@ def algo_report(src, target, Buildings):
 
     node_list = []
 
+
     # algo showcase
     print("Nodes: ", len(G.nodes()))
     print("Edges: ", len(G.edges()))
 
+    avg_degree = sum(dict(G.degree()).values()) / len(G.nodes())
+    print("Degree: ", avg_degree)
+    
+    
+    print("\n")
+
     # Single Answer (From u to v) 
     if Buildings == None and target:
         path, distance = djistrikas_algorithm(src, target)
-        print(f'Path taken by djistrikas algorithm \n{path}\ndistance_traveled: {distance}\n\n')
-    
-        dist, nxt, idx, rev_idx = floyd_warshall()
+        print(f'Path taken by djistrikas algorithm {path}\ndistance_traveled: {distance}\n\n')
+        print(convert_to_time(path, "walking"), "minute travel time")
+
+        dist, nxt, idx, rev_idx = floyd_warshall(G)
         path, dist = floyd_answer(src, target, dist, nxt, idx)
     
-        print("Shortest path from Floyd-Warshall")
+        print("Floyd-Warshall")
         print(f'Distance: {dist}\nPath to goal node:\n{path}')
+        print(convert_to_time(path, "walking"), "minute travel time")
 
         node_list = path
 
@@ -290,16 +300,17 @@ def algo_report(src, target, Buildings):
     # multiple answers (Building List)
     elif Buildings and target == None:
         # call Djistrika multiple times to get answer
-        ans = djistrika_multiple_nodes(src, Building)
-        print("djistrika: shortest path out of all entrances", ans)
-        print(convert_to_time(ans[0], "walking"), "minute travel time")
+        ans = djistrika_multiple_nodes(src, Buildings)
+        print("djistrika: shortest path out of all entrances", ans[1])
+        print("djistrika: distance", ans[0])
+        print(convert_to_time(ans[0], "walking"), "minute travel time\n")
 
         node_list = ans[1]
 
-        print("Shortest path out of all pairs from Floyd-Warshall\n")
-        dist, path = floyd_check_multiple('1', Building)
-        print(f'Distance: {dist}\n Path to goal node:\n {path}')
-
+        print("Floyd-Warshall")
+        dist, path = floyd_check_multiple(src, Buildings)
+        print(f'Distance: {path}\nPath_to_goal_node: {dist}')
+        print(convert_to_time(path, "walking"), "minute travel time\n")
 
     else:
         print("something went wrong")
@@ -307,11 +318,11 @@ def algo_report(src, target, Buildings):
 
     
     print("\nDrawing Graph -----")
-    vz.draw_graph(G)
-    vz.highlight_edges(node_list)
-    print("Finished!")
+    # vz.draw_graph(G)
+    # vz.highlight_edges(node_list)
+    # print("Finished!")
 
 
 
-Building = ['64', '62', 'Pallative Care', 'Peck_Back']
-algo_report('1', None, Building)
+# Building = ['64', '62', 'Pallative Care', 'Peck_Back']
+# algo_report('1', None, bl.Founders)
