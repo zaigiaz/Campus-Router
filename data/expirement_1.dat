@@ -1,0 +1,11 @@
+# check run time and space complexity of both floyd warshall and djistirkas
+# nodes FW_time  FW_mem  Djistrika_time  Djistrika_mem
+16       0.001     0.02     0.00      0.01
+32       0.008     0.08     0.02      0.03
+64       0.064     0.32     0.04      0.09
+128      0.512     1.28     0.031     0.33
+256      4.096     5.12     0.65      1.0
+512      32.77     20.48    3.7       3.2
+1024     262.14    81.92    11.4      10.2
+2048     2097.15   327.68   146.2     32.8
+

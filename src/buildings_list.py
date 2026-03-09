@@ -3,6 +3,20 @@
 
 # this way you can just specify which Building and immediatly get routed there
 
+Morris_Central = [
+    "M_centerA",
+    "M_centerB",
+    "M_centerC",
+    "M_centerD",
+    "M_centerE",
+    "M_centerF",
+    "M_centerG",
+    "M_centerH",
+    "M_centerW",
+    "M_centerM",
+    "M_centerZ",
+]
+
 Morris_Center = [ 
     "Morris_Front",
     "Morris_SideA",

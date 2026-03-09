@@ -1,4 +1,6 @@
 import networkx as nx 
+# from memory_profiler import profile
+# import timeit
 import math
 import sys
 import heapq
@@ -26,7 +28,8 @@ G = nx.read_gml("../data/final_graph.gml")
 #      Output: path, distance
 #      returns the path to given goal node and the total sum distance
 #
-def djistrikas_algorithm(u, v):
+# @profile
+def djistrikas_algorithm(G, u, v):
 
     start_node = u
     end_node = v
@@ -42,7 +45,7 @@ def djistrikas_algorithm(u, v):
         cur_dist, u = heapq.heappop(pq)
         
         if u in visited:
-            continue
+           continue
 
         visited.add(u)
         
@@ -81,12 +84,13 @@ def djistrikas_algorithm(u, v):
 # 
 # Output: (dist, path) 
 #         distance to smallest node, and path reconstructed to it
+# @profile
 def djistrika_multiple_nodes(start_node, Building):
 
     pq = []
 
     for end_node in range(len(Building)):        
-        path, dist = djistrikas_algorithm(start_node, Building[end_node])
+        path, dist = djistrikas_algorithm(G, start_node, Building[end_node])
     
         if path == None or dist == math.inf:
             print(f'cannot reach {end_node} from {start_node}')
@@ -94,7 +98,7 @@ def djistrika_multiple_nodes(start_node, Building):
         
         heapq.heappush(pq, (dist, path))
 
-    dist, path = heapq.heappop(pq)
+    path, dist = heapq.heappop(pq)
     return (dist, path)
         
     
@@ -105,6 +109,7 @@ def djistrika_multiple_nodes(start_node, Building):
 # Output: matrix of distances from nodes i->j, table of prev nodes i->j
 #         two dicts of indexed node names, both forward and reverse 
 #
+# @profile
 def floyd_warshall(G):
 
     size = len(G.nodes())
@@ -163,6 +168,7 @@ def floyd_warshall(G):
 # Outputs: path, dist
 #          Path to goal node, distance to it
 #
+# @profile
 def floyd_check_multiple(src, Building):
 
     pq = []
@@ -283,16 +289,16 @@ def algo_report(src, target, Buildings):
 
     # Single Answer (From u to v) 
     if Buildings == None and target:
-        path, distance = djistrikas_algorithm(src, target)
+        path, distance = djistrikas_algorithm(G, src, target)
         print(f'Path taken by djistrikas algorithm {path}\ndistance_traveled: {distance}\n\n')
-        print(convert_to_time(path, "walking"), "minute travel time")
+        print(convert_to_time(distance, "walking"), "minute travel time")
 
         dist, nxt, idx, rev_idx = floyd_warshall(G)
         path, dist = floyd_answer(src, target, dist, nxt, idx)
     
         print("Floyd-Warshall")
         print(f'Distance: {dist}\nPath to goal node:\n{path}')
-        print(convert_to_time(path, "walking"), "minute travel time")
+        print(convert_to_time(dist, "walking"), "minute travel time")
 
         node_list = path
 
@@ -310,7 +316,7 @@ def algo_report(src, target, Buildings):
         print("Floyd-Warshall")
         dist, path = floyd_check_multiple(src, Buildings)
         print(f'Distance: {path}\nPath_to_goal_node: {dist}')
-        print(convert_to_time(path, "walking"), "minute travel time\n")
+        print(convert_to_time(distance, "walking"), "minute travel time\n")
 
     else:
         print("something went wrong")
@@ -318,11 +324,12 @@ def algo_report(src, target, Buildings):
 
     
     print("\nDrawing Graph -----")
-    # vz.draw_graph(G)
-    # vz.highlight_edges(node_list)
-    # print("Finished!")
+    vz.draw_graph(G)
+    vz.highlight_edges(node_list)
+    print("Finished!")
 
 
 
+# example code
 # Building = ['64', '62', 'Pallative Care', 'Peck_Back']
-# algo_report('1', None, bl.Founders)
+# algo_report('1', '4', None)

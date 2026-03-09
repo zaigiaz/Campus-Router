@@ -3,6 +3,8 @@ import pathfinding as pf
 import buildings_list as bl
 import random
 
+# explores our graph and measures the percentage of buildings crossed on a random path
+
 G = nx.read_gml("../data/final_graph.gml")
 nodes = list(G.nodes())
 
@@ -10,7 +12,7 @@ in_morris = 0
 out_morris = 0
 total_paths = 0
 
-for n in range(200):
+for n in range(10000):
     node1, node2 = random.sample(nodes, 2)
     ans = pf.djistrikas_algorithm(node1, node2)
 
@@ -18,8 +20,8 @@ for n in range(200):
         continue
     
     total_paths += 1
-    # Count Morris nodes vs non-Morris in this path
-    morris_count = sum(1 for node in ans[0] if node in bl.Morris_Center)
+
+    morris_count = sum(1 for node in ans[0] if node in bl.Art)
     in_morris += morris_count
     out_morris += len(ans[0]) - morris_count
 

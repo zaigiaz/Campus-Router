@@ -1,0 +1,13 @@
+# buildings_paths.dat
+# Number of shortest paths going through each building
+# count building_name
+
+16	Central
+4	Morris_Center
+4.5	Katherine_Dunham
+1.2	Rendleman
+0.5	Engineering
+6.3	Peck
+0.4	Lovejoy_Library
+0.9	Founders
+0.5	Art

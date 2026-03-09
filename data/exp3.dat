@@ -1,0 +1,7 @@
+# expirement 3, find the ratio between graph size and amount of times querying each algorihtm
+# N   T_FW(s)    T_D(s) Q* (queries)
+  32    0.0014  0.000018           83
+  64    0.0090  0.000061          148
+ 128    0.0557  0.000216          260
+ 256    0.3944  0.000782          504
+ 512    3.5386  0.003082         1148
